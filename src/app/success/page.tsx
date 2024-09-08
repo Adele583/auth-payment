@@ -1,12 +1,8 @@
 'use client';
 
-import { useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
 import { UserButton } from '@clerk/nextjs';
 
 export default function SuccessPage() {
-  const searchParams = useSearchParams();
-  const [setStatus] = useState('Loading...');
 
   return (
     <div className="relative min-h-screen flex flex-col items-center justify-center bg-gray-100 p-4">
