@@ -9,7 +9,21 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 // Load Stripe instance only once
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
-export default function PricingPlans({ plans }) {
+// Define the Plan interface
+interface Plan {
+  name: string;
+  description: string;
+  price: string;
+  features: string[];
+  planId: string | null;
+}
+
+// Define the props interface
+interface PricingPlansProps {
+  plans: Plan[];
+}
+
+export default function PricingPlans({ plans }: PricingPlansProps) {
   const handleCheckout = async (planId: string | null) => {
     if (!planId) {
       alert('This plan does not require payment.');
