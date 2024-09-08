@@ -28,9 +28,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       }
 
       event = stripe.webhooks.constructEvent(buf, sig, endpointSecret);
-    } catch (err: any) {
-      console.log(`⚠️  Webhook signature verification failed.`, err.message);
-      return res.status(400).send(`Webhook Error: ${err.message}`);
+    } catch (err: unknown) {
+      console.error(`⚠️  Webhook Error:`, err instanceof Error ? err.message : String(err));
+      return res.status(400).json({ error: 'Webhook Error' });
     }
 
     try {
