@@ -15,13 +15,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return res.status(400).json({ error: 'Missing planId' });
       }
 
-      // Create a Checkout Session
       const session = await stripe.checkout.sessions.create({
         payment_method_types: ['card'],
-        mode: 'subscription',  // For recurring payments
+        mode: 'subscription',
         line_items: [
           {
-            price: planId, // Stripe Price ID from the client
+            price: planId,
             quantity: 1,
           },
         ],
@@ -29,7 +28,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         cancel_url: `${req.headers.origin}/cancel`,
       });
 
-      // Respond with the session ID
       res.status(200).json({ sessionId: session.id });
     } catch (err: unknown) {
       console.error('Error creating Stripe Checkout session:', err instanceof Error ? err.message : String(err));

@@ -43,7 +43,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           const invoice = event.data.object as Stripe.Invoice;
           await handleFailedPayment(invoice);
           break;
-        // Add more cases as needed
         default:
           console.log(`Unhandled event type ${event.type}`);
       }
@@ -61,10 +60,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
 async function handleSuccessfulCheckout(session: Stripe.Checkout.Session) {
   console.log('Payment succeeded:', session);
-  // Implement your logic to update user's subscription in your database
 }
 
 async function handleFailedPayment(invoice: Stripe.Invoice) {
   console.log('Payment failed:', invoice);
-  // Implement your logic to notify the user about the failed payment
 }

@@ -1,15 +1,13 @@
-// src/components/PricingPlans.tsx (Client Component)
-'use client'; // This directive tells Next.js it's a Client Component
+// src/components/PricingPlans.tsx
+'use client';
 
-import { loadStripe } from '@stripe/stripe-js'; // Load Stripe.js for handling client-side checkout
+import { loadStripe } from '@stripe/stripe-js';
 import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 
-// Load Stripe instance only once
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
-// Define the Plan interface
 interface Plan {
   name: string;
   description: string;
@@ -18,7 +16,6 @@ interface Plan {
   planId: string | null;
 }
 
-// Define the props interface
 interface PricingPlansProps {
   plans: Plan[];
 }
@@ -42,7 +39,6 @@ export default function PricingPlans({ plans }: PricingPlansProps) {
 
     const { sessionId } = await res.json();
 
-    // Redirect to Stripe Checkout
     const { error } = await stripe!.redirectToCheckout({
       sessionId,
     });
