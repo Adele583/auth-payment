@@ -12,7 +12,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const { planId } = req.body;
 
       if (!planId) {
-        throw new Error('Missing planId');
+        return res.status(400).json({ error: 'Missing planId' });
       }
 
       // Create a Checkout Session
@@ -31,8 +31,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
       // Respond with the session ID
       res.status(200).json({ sessionId: session.id });
-    } catch (err: any) {
-      console.error('Error creating Stripe Checkout session:', err.message);
+    } catch (err: unknown) {
+      console.error('Error creating Stripe Checkout session:', err instanceof Error ? err.message : String(err));
       res.status(500).json({ error: 'Internal Server Error' });
     }
   } else {
