@@ -7,7 +7,7 @@ import { UserButton } from '@clerk/nextjs';
 export default function SuccessPage() {
   const searchParams = useSearchParams();
   const sessionId = searchParams.get('session_id');
-  const [status, setStatus] = useState('Loading...');
+  const [setStatus] = useState('Loading...');
 
   useEffect(() => {
     if (sessionId) {
